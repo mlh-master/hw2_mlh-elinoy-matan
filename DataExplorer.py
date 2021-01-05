@@ -50,8 +50,7 @@ def data_explorer(df):
             plt.show()
 
 def data_gender_explorer(df):
-    # label = 'Age'
-    # Age = df['Age'].loc[:, label]
+
     legend = ['female','male']
 
     x1 = df['Age'].loc[(df['Diagnosis'] == 'Positive') & (df['Gender'] == 'Female')]
