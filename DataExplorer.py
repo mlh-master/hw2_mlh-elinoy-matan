@@ -49,6 +49,20 @@ def data_explorer(df):
             plt.legend(legend)
             plt.show()
 
+def data_gender_explorer(df):
+    # label = 'Age'
+    # Age = df['Age'].loc[:, label]
+    legend = ['female','male']
+
+    x1 = df['Age'].loc[(df['Diagnosis'] == 'Positive') & (df['Gender'] == 'Female')]
+    x2 = df['Age'].loc[(df['Diagnosis'] == 'Positive') & (df['Gender'] == 'Male')]
+    plt.hist([x1,x2], color=['blue','orange'], bins =10)
+
+    plt.xlabel('Age', fontsize=30)
+    plt.ylabel('count', fontsize=30)
+    plt.title ('Positive diagnosis')
+    plt.legend(legend)
+    plt.show()
 
 def test_train_comparison(X_train, X_test):
     data_dict = {}
@@ -69,3 +83,14 @@ def encode_and_bind(df):
             df = pd.concat([df, dummies], axis=1)
             df = df.drop(columns=[col])
     return df
+
+def age_scale(X_train, X_test):
+    scaler = StandardScaler()
+    for col in X_train:
+        if col == 'Age':
+            train_Age_scale = scaler.fit_transform(X_train[[col]])
+            X_train = X_train.assign(Age=train_Age_scale)
+            test_Age_scale = scaler.transform(X_test[[col]])
+            X_test = X_test.assign(Age=test_Age_scale)
+    return X_train, X_test
+
